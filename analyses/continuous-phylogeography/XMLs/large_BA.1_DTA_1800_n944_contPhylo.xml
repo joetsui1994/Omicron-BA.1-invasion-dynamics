@@ -1,0 +1,169 @@
+<?xml version="1.0" standalone="yes"?>
+ 
+<!--generated with beastgen.py-->
+
+<beast>
+   <!-- The list of taxa to be analysed (can also include dates/ages).          -->
+    <!-- ntax=944                                             -->
+    <taxa id="taxa_BA1_DTA_1800_n944_all_ltlas_final">
+	<!--insert taxon block here-->
+    </taxa> 
+
+<!-- Insert starting tree blocks -->  
+    <empiricalTreeDistributionModel id="BA1_DTA_1800_n944_all_ltlas_final" fileName="../BA1_DTA_1800_n944_all_ltlas_final.nexus">
+		<taxa idref="taxa_BA1_DTA_1800_n944_all_ltlas_final"/>
+	</empiricalTreeDistributionModel> 
+
+<!-- START Multivariate diffusion model                                      -->
+	<multivariateDiffusionModel id="coordinates.diffusionModel">
+		<precisionMatrix>
+			<matrixParameter id="coordinates.precision">
+				<parameter id="coordinates.precision.col1" value="0.05 0.002"/>
+				<parameter id="coordinates.precision.col2" value="0.002 0.05"/>
+			</matrixParameter>
+		</precisionMatrix>
+	</multivariateDiffusionModel>
+
+	<multivariateWishartPrior id="coordinates.precisionPrior" df="2">
+		<scaleMatrix>
+			<matrixParameter>
+				<parameter value="1.0 0.0"/>
+				<parameter value="0.0 1.0"/>
+			</matrixParameter>
+		</scaleMatrix>
+		<data>
+			<parameter idref="coordinates.precision"/>
+		</data>
+	</multivariateWishartPrior>
+
+	<!-- END Multivariate diffusion model                                        -->
+
+
+<!-- START Multivariate diffusion model                                      -->
+	<arbitraryBranchRates id="coordinates.diffusion.branchRates.BA1_DTA_1800_n944_all_ltlas_final">
+		<treeModel idref="BA1_DTA_1800_n944_all_ltlas_final"/>
+		<rates>
+			<parameter id="coordinates.diffusion.rates.BA1_DTA_1800_n944_all_ltlas_final" lower="0.0"/>
+		</rates>
+	</arbitraryBranchRates>
+	<distributionLikelihood id="coordinates.diffusion.prior.BA1_DTA_1800_n944_all_ltlas_final">
+		<data>
+			<parameter idref="coordinates.diffusion.rates.BA1_DTA_1800_n944_all_ltlas_final"/>
+		</data>
+		<distribution>
+			<onePGammaDistributionModel>
+				<shape>
+
+					<!-- half DF (i.e., df = 1)                                                  -->
+					<parameter value="0.5"/>
+				</shape>
+			</onePGammaDistributionModel>
+		</distribution>
+	</distributionLikelihood>
+	
+	<multivariateTraitLikelihood id="coordinates.traitLikelihood.BA1_DTA_1800_n944_all_ltlas_final" traitName="coordinates" useTreeLength="true" scaleByTime="true" reportAsMultivariate="true" reciprocalRates="true" integrateInternalTraits="true">
+		<multivariateDiffusionModel idref="coordinates.diffusionModel"/>
+		<treeModel idref="BA1_DTA_1800_n944_all_ltlas_final"/>
+		<traitParameter>
+			<parameter id="leaf.coordinates.BA1_DTA_1800_n944_all_ltlas_final"/>
+		</traitParameter>
+		<conjugateRootPrior>
+			<meanParameter>
+				<parameter value="0.0 0.0"/>
+			</meanParameter>
+			<priorSampleSize>
+				<parameter value="0.000001"/>
+			</priorSampleSize>
+		</conjugateRootPrior>
+		<arbitraryBranchRates idref="coordinates.diffusion.branchRates.BA1_DTA_1800_n944_all_ltlas_final"/>
+	</multivariateTraitLikelihood>
+	<continuousDiffusionStatistic id="coordinates.diffusionRate.BA1_DTA_1800_n944_all_ltlas_final" greatCircleDistance="true">
+		<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA1_DTA_1800_n944_all_ltlas_final"/>
+	</continuousDiffusionStatistic>
+
+	
+	
+	<correlation id="coordinates.correlation" dimension1="1" dimension2="2">
+		<matrixParameter idref="coordinates.precision"/>
+	</correlation>
+	<matrixInverse id="coordinates.varCovar">
+		<matrixParameter idref="coordinates.precision"/>
+	</matrixInverse>
+	
+
+	<!-- END Multivariate diffusion model                                        -->	
+	
+	
+	<!-- Define operators                                                        --> 
+    <operators id="operators" optimizationSchedule="log">
+		<scaleOperator scaleFactor="0.75" weight="30">
+			<parameter idref="coordinates.diffusion.rates.BA1_DTA_1800_n944_all_ltlas_final"/>
+		</scaleOperator> 
+		<!-- Insert precisionGibbsOperator blocks --> 
+		<precisionGibbsOperator weight="2">
+			<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA1_DTA_1800_n944_all_ltlas_final"/>
+			<multivariateWishartPrior idref="coordinates.precisionPrior"/> 
+		</precisionGibbsOperator> 
+
+    </operators>
+    
+    <mcmc id="mcmc" chainLength="300000000" autoOptimize="true">
+		<joint id="joint">
+			<prior id="prior">
+				<distributionLikelihood idref="coordinates.diffusion.prior.BA1_DTA_1800_n944_all_ltlas_final"/>
+				<multivariateWishartPrior idref="coordinates.precisionPrior"/> 
+            </prior>
+			<likelihood id="likelihood">
+				<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA1_DTA_1800_n944_all_ltlas_final"/>
+			</likelihood>
+		</joint>
+        <operators idref="operators"/>
+
+    <!-- write log to screen                                                     -->
+		<log id="screenLog" logEvery="10000">
+			<column label="Joint" dp="4" width="12">
+				<joint idref="joint"/>
+			</column>
+			<column label="Prior" dp="4" width="12">
+				<prior idref="prior"/>
+			</column>
+			<column label="Likelihood" dp="4" width="12">
+				<likelihood idref="likelihood"/>
+			</column>
+		</log>
+
+		<log id="fileLog" logEvery="10000" fileName="BA1_DTA_1800_n944_all_ltlas.log" overwrite="false">
+			<joint idref="joint"/> 
+			<prior idref="prior"/> 
+			<likelihood idref="likelihood"/> 
+			<!-- START Multivariate diffusion model                                      --> 
+			<matrixParameter idref="coordinates.precision"/> 
+			<correlation idref="coordinates.correlation"/> 
+			<matrixInverse idref="coordinates.varCovar"/> 
+			<!-- Insert continuousDiffusionStatistic blocks 2 --> 
+				<continuousDiffusionStatistic idref="coordinates.diffusionRate.BA1_DTA_1800_n944_all_ltlas_final"/>
+			<!-- Insert multivariateTraitLikelihood blocks 2 --> 
+				<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA1_DTA_1800_n944_all_ltlas_final"/>
+		</log>
+
+		<!-- write tree log to file                                                  -->
+		<logTree id="treeFileLog_BA1_DTA_1800_n944_all_ltlas_final" logEvery="10000" nexusFormat="true" fileName="BA1_DTA_1800_n944_all_ltlas_final.trees" sortTranslationTable="true">
+			<treeModel idref="BA1_DTA_1800_n944_all_ltlas_final"/>
+			<joint idref="joint"/> 
+			<trait name="coordinates" tag="coordinates"> 
+				<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA1_DTA_1800_n944_all_ltlas_final"/>
+			</trait> 
+			<multivariateDiffusionModel idref="coordinates.diffusionModel"/> 
+			<trait name="rate" tag="coordinates.rate"> 
+				<arbitraryBranchRates idref="coordinates.diffusion.branchRates.BA1_DTA_1800_n944_all_ltlas_final"/>
+			</trait> 
+		</logTree> 
+	</mcmc>
+
+	<report>
+		<property name="timer">
+			<mcmc idref="mcmc"/>
+		</property>
+	</report>
+	
+</beast>

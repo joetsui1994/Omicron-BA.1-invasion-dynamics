@@ -1,0 +1,169 @@
+<?xml version="1.0" standalone="yes"?>
+ 
+<!--generated with beastgen.py-->
+
+<beast>
+   <!-- The list of taxa to be analysed (can also include dates/ages).          -->
+    <!-- ntax=113                                             -->
+    <taxa id="taxa_BA117_478_n113">
+	<!--insert taxon block here-->
+    </taxa> 
+
+<!-- Insert starting tree blocks -->  
+	<empiricalTreeDistributionModel id="BA117_478_n113" fileName="../BA117_478_n113.nexus">
+		<taxa idref="taxa_BA117_478_n113"/>
+	</empiricalTreeDistributionModel> 
+
+<!-- START Multivariate diffusion model                                      -->
+	<multivariateDiffusionModel id="coordinates.diffusionModel">
+		<precisionMatrix>
+			<matrixParameter id="coordinates.precision">
+				<parameter id="coordinates.precision.col1" value="0.05 0.002"/>
+				<parameter id="coordinates.precision.col2" value="0.002 0.05"/>
+			</matrixParameter>
+		</precisionMatrix>
+	</multivariateDiffusionModel>
+
+	<multivariateWishartPrior id="coordinates.precisionPrior" df="2">
+		<scaleMatrix>
+			<matrixParameter>
+				<parameter value="1.0 0.0"/>
+				<parameter value="0.0 1.0"/>
+			</matrixParameter>
+		</scaleMatrix>
+		<data>
+			<parameter idref="coordinates.precision"/>
+		</data>
+	</multivariateWishartPrior>
+
+	<!-- END Multivariate diffusion model                                        -->
+
+
+<!-- START Multivariate diffusion model                                      -->
+	<arbitraryBranchRates id="coordinates.diffusion.branchRates.BA117_478_n113">
+		<treeModel idref="BA117_478_n113"/>
+		<rates>
+			<parameter id="coordinates.diffusion.rates.BA117_478_n113" lower="0.0"/>
+		</rates>
+	</arbitraryBranchRates>
+	<distributionLikelihood id="coordinates.diffusion.prior.BA117_478_n113">
+		<data>
+			<parameter idref="coordinates.diffusion.rates.BA117_478_n113"/>
+		</data>
+		<distribution>
+			<onePGammaDistributionModel>
+				<shape>
+
+					<!-- half DF (i.e., df = 1)                                                  -->
+					<parameter value="0.5"/>
+				</shape>
+			</onePGammaDistributionModel>
+		</distribution>
+	</distributionLikelihood>
+	
+	<multivariateTraitLikelihood id="coordinates.traitLikelihood.BA117_478_n113" traitName="coordinates" useTreeLength="true" scaleByTime="true" reportAsMultivariate="true" reciprocalRates="true" integrateInternalTraits="true">
+		<multivariateDiffusionModel idref="coordinates.diffusionModel"/>
+		<treeModel idref="BA117_478_n113"/>
+		<traitParameter>
+			<parameter id="leaf.coordinates.BA117_478_n113"/>
+		</traitParameter>
+		<conjugateRootPrior>
+			<meanParameter>
+				<parameter value="0.0 0.0"/>
+			</meanParameter>
+			<priorSampleSize>
+				<parameter value="0.000001"/>
+			</priorSampleSize>
+		</conjugateRootPrior>
+		<arbitraryBranchRates idref="coordinates.diffusion.branchRates.BA117_478_n113"/>
+	</multivariateTraitLikelihood>
+	<continuousDiffusionStatistic id="coordinates.diffusionRate.BA117_478_n113" greatCircleDistance="true">
+		<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA117_478_n113"/>
+	</continuousDiffusionStatistic>
+
+	
+	
+	<correlation id="coordinates.correlation" dimension1="1" dimension2="2">
+		<matrixParameter idref="coordinates.precision"/>
+	</correlation>
+	<matrixInverse id="coordinates.varCovar">
+		<matrixParameter idref="coordinates.precision"/>
+	</matrixInverse>
+	
+
+	<!-- END Multivariate diffusion model                                        -->	
+	
+	
+	<!-- Define operators                                                        --> 
+    <operators id="operators" optimizationSchedule="log">
+		<scaleOperator scaleFactor="0.75" weight="30">
+			<parameter idref="coordinates.diffusion.rates.BA117_478_n113"/>
+		</scaleOperator> 
+		<!-- Insert precisionGibbsOperator blocks --> 
+		<precisionGibbsOperator weight="2">
+			<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA117_478_n113"/>
+			<multivariateWishartPrior idref="coordinates.precisionPrior"/> 
+		</precisionGibbsOperator> 
+
+    </operators>
+    
+    <mcmc id="mcmc" chainLength="200000000" autoOptimize="true">
+		<joint id="joint">
+			<prior id="prior">
+				<distributionLikelihood idref="coordinates.diffusion.prior.BA117_478_n113"/>
+				<multivariateWishartPrior idref="coordinates.precisionPrior"/> 
+            </prior>
+			<likelihood id="likelihood">
+				<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA117_478_n113"/>
+			</likelihood>
+		</joint>
+        <operators idref="operators"/>
+
+    <!-- write log to screen                                                     -->
+		<log id="screenLog" logEvery="10000">
+			<column label="Joint" dp="4" width="12">
+				<joint idref="joint"/>
+			</column>
+			<column label="Prior" dp="4" width="12">
+				<prior idref="prior"/>
+			</column>
+			<column label="Likelihood" dp="4" width="12">
+				<likelihood idref="likelihood"/>
+			</column>
+		</log>
+
+		<log id="fileLog" logEvery="10000" fileName="./BA117_478_n113/BA117_478_n113.log" overwrite="false">
+			<joint idref="joint"/> 
+			<prior idref="prior"/> 
+			<likelihood idref="likelihood"/> 
+			<!-- START Multivariate diffusion model                                      --> 
+			<matrixParameter idref="coordinates.precision"/> 
+			<correlation idref="coordinates.correlation"/> 
+			<matrixInverse idref="coordinates.varCovar"/> 
+			<!-- Insert continuousDiffusionStatistic blocks 2 --> 
+				<continuousDiffusionStatistic idref="coordinates.diffusionRate.BA117_478_n113"/>
+			<!-- Insert multivariateTraitLikelihood blocks 2 --> 
+				<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA117_478_n113"/>
+		</log>
+
+		<!-- write tree log to file                                                  -->
+		<logTree id="treeFileLog_BA117_478_n113" logEvery="10000" nexusFormat="true" fileName="BA117_478_n113.trees" sortTranslationTable="true">
+			<treeModel idref="BA117_478_n113"/>
+			<joint idref="joint"/> 
+			<trait name="coordinates" tag="coordinates"> 
+				<multivariateTraitLikelihood idref="coordinates.traitLikelihood.BA117_478_n113"/>
+			</trait> 
+			<multivariateDiffusionModel idref="coordinates.diffusionModel"/> 
+			<trait name="rate" tag="coordinates.rate"> 
+				<arbitraryBranchRates idref="coordinates.diffusion.branchRates.BA117_478_n113"/>
+			</trait> 
+		</logTree> 
+	</mcmc>
+
+	<report>
+		<property name="timer">
+			<mcmc idref="mcmc"/>
+		</property>
+	</report>
+	
+</beast>

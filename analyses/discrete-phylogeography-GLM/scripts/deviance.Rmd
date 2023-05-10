@@ -1,0 +1,94 @@
+---
+title: "Deviance"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load}
+dev1 <- read.delim("run1/importance.estimation.txt", header = TRUE)
+dev2 <- read.delim("run2/importance.estimation.txt", header = TRUE)
+dev <- rbind(dev1, dev2)
+```
+
+```{r convertToRanks}
+library(dplyr)
+tmp <- t(apply(-dev %>% 
+                 select(-"sample", -"state", -"logLikelihood",
+                        -"devianceAll"), 
+               1, rank, ties.method = "random"))
+colnames(tmp) <- paste0("rank", c(1:12))
+
+dev <- data.frame(dev, tmp)
+```
+
+```{r determineModal}
+rankings <- apply(tmp, 1, paste, collapse="-")
+
+freq <- function(x, n) {
+    len <- length(x)
+    tab <- -head(sort(-table(x)), n)
+    tab <- tab / len
+    data.frame(ranking = names(tab), probability = as.numeric(tab))
+}
+
+freq(rankings, 10)
+```
+
+```{r plot}
+
+par(mfrow=c(1,1))  
+for (index in c(1:12)) {
+  pdf(file = paste0("plot", index,".pdf"))
+  hist(dev[, 16 + index] + 0.5, xlim = c(0,13), breaks = c(1:13), 
+       freq = FALSE, axes = FALSE, 
+       main = "", ylab = "", xlab = paste0("Coviariate ", index))
+  axis(1, at = c(1:12) + 0.5,
+       label = c(1:12))
+  #dev.copy2pdf(file = paste0("plot", index,".pdf"))
+  dev.off()
+}
+```
+
+
+## Posterior rankings for epoch 2
+
+\begin{figure}
+```{r, results='asis', echo=FALSE}
+for (i in c(1:12)) {
+  cat(paste0("\\includegraphics[width=0.2\\textwidth]{plot", i, ".pdf} \n"))
+}
+```
+\end{figure}
+
+
+```{r summarize}
+#library(pmr)
+median(dev$rank1)
+median(dev$rank2)
+median(dev$rank3)
+median(dev$rank4)
+median(dev$rank5)
+median(dev$rank6)
+median(dev$rank7)
+median(dev$rank8)
+median(dev$rank9)
+median(dev$rank10)
+median(dev$rank11)
+median(dev$rank12)
+
+freq(dev$rank1, 1)
+freq(dev$rank2, 1)
+freq(dev$rank3, 1)
+freq(dev$rank4, 1)
+freq(dev$rank5, 1)
+freq(dev$rank6, 1)
+freq(dev$rank7, 1)
+freq(dev$rank8, 1)
+freq(dev$rank9, 1)
+freq(dev$rank10, 1)
+freq(dev$rank11, 1)
+freq(dev$rank12, 1)
+```
