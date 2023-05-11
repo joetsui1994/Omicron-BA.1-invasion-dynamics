@@ -1,0 +1,55 @@
+---
+# global params (or default parameters)
+version: false
+global:
+  inDir: "$PWD/input"
+  outDir: "$PWD/output"
+  seqLen: 29903
+  # (default=2) 0: no temporal QC, 1: only TreeTime, 2: only chronumental
+  temp_qc_mode: 1
+  nextclade_qc:
+    refDir: "$PWD/resources/nextclade_ref"
+    qc_json: "$PWD/resources/nextclade_ref/qc.json"
+    stop: false
+  usher:
+    start_tree: "$PWD/resources/usher/starting_tree.nwk"
+    start_fa: "$PWD/resources/usher/starting_single.fasta"
+    outgroup: ""
+    ref_seq_fa: "$PWD/resources/usher/ref_seq.fasta"
+    optimise_radius: 40
+    optimise_iter_n: 6
+    optimise_final_radius: 100
+    max_placements_n: 4
+    stop: false
+  treetime_qc:
+    clock_rate: 0.00075
+    clock_rate_std: 2.0e-4
+    clock_filter: 3
+    brl_mode: "marginal"
+    stop: false
+  chron_qc:
+    # write as string to prevent clock_rate from being converted into scientific notation
+    clock_rate: "0.00075"
+    var_dates: 0.3
+    steps: 1000
+    date_var: 0.3
+    date_p_val: 0.95
+  beast:
+    chainLen: 10000000
+    logEvery: 10000
+    treeLogEvery: 100000
+    screenLogEvery: 10000
+    repeat_n: 1
+    template: "$PWD/example_resources/beast_templates/SG-thorney.template.xml"
+    stop: false
+# params for individual runs, global params are overwritten where specified
+runs:
+  - key: "run_1"
+    treetime_qc:
+      clock_filter: 1
+    usher:
+      optimise_iter_n: 10
+      optimise_final_radius: 0
+      max_placements_n: 1
+  - key: "run_2"
+    temp_qc_mode: 2
