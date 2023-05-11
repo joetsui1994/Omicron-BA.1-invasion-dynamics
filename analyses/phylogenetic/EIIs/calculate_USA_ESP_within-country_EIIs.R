@@ -230,7 +230,7 @@ ESP_case_test_dat.20211219_imputed.df <- ESP_case_test_dat.df %>%
 ## process GISAID metadata
 ##################################################################
 
-gisaid_dat.df <- read.csv('./data/metadata_20230502_reduced.tsv', sep='\t')
+gisaid_dat.df <- read.csv('./data/reduced_gisaid_metadata.tsv', sep='\t')
 gisaid_dat.df <- gisaid_dat.df %>%
   rename(date=Collection.date)
 gisaid_dat.df$date <- as.Date(gisaid_dat.df$date)

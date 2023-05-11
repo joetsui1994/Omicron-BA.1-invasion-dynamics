@@ -142,31 +142,7 @@ top_80p_countries_flight_dat.weekly.df <- data.frame(
   group_by(country, week) %>%
   summarise(totalPassengerVolume.weekly=sum(totalPassengerVolume.daily))
 
-## define colours for the 27 selected countries
-# color_scheme <- c(
-#   '#1B7883',
-#   '#3E4855',
-#   '#78424b',
-#   '#ad3739',
-#   '#F8C55D',
-#   '#947A47',
-#   '#313030'
-# )
-# ## specific colours for South Africa, Spain, United States, Ireland, and Scotland
-# custom_colours <- c(
-#   '#D43F3A',
-#   '#0C4C5F',
-#   '#E6824C',
-#   '#EAB059',
-#   '#947A47'
-# )
-# country_colours.r <- sample(colorRampPalette(color_scheme)(50),
-#                           length(total_80p_countries.ZAF_added) - length(custom_colours))
-# country_colours <- c(
-#   custom_colours,
-#   permute(country_colours.r)
-# )
-## fix country colours
+## specify country colours
 country_colours.df <- data.frame(
   country=c("others", "South Africa", "Spain", "United States", "Italy", "Ireland", "Scotland",
             "Portugal", "Germany", "Poland", "Northern Ireland", "France", "Switzerland", "United Arab Emirates",
@@ -174,8 +150,8 @@ country_colours.df <- data.frame(
             "Pakistan", "Norway", "Cyprus", "Egypt", "Austria", "Nigeria"),
   colour=c("#484848", "#D43F3A", "#0C4C5F", "#E6824C", "#EAB059", "#947A47", "#893E45", "#335059",
            "#D6854C", "#60444F", "#F1B95A", "#313030", "#b38936", "#963B40", "#CD7348", "#CFA654",
-           "#1F727D", "#6E424C", "#C29D51", "#7C4149", "#BA513F", "#384E5B", "#1B7883", "#9E8149",
-           "#524551", "#B6944E", "#f0b154", "#4B4652")
+           "#1c8a99", "#6E424C", "#C29D51", "#7C4149", "#BA513F", "#384E5B", "#1B7883", "#9E8149",
+           "#524551", "#B6944E", "#4B4652", "#f0b154")
 )
 
 ##################################################################
@@ -457,6 +433,6 @@ ggplot() +
   )
 
 ## output plot to file
-ggsave('./figures/country_weekly_case_per_capita_v2.pdf',
+ggsave('./figures/country_weekly_case_per_capita.pdf',
        device='pdf', width=7.645, height=4.5)
 
