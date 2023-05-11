@@ -1,0 +1,2 @@
+# UShER-incremental
+A re-implementation of (McBroome et al. 2021)'s method of maintaining a daily-updated MAT database of global SARS-CoV-2 sequences. Briefly, sequences are first diivided into batches according to sample dates and are then inserted into a pre-built phylogeny using UShER placement tool (Turakhia et al. 2021). Previously excluded sequences are reconsidered for placement during each build. The resulting tree is then passed through a two-step optimisation procedure, first through FastTreeMP and then matOptimize.

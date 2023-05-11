@@ -1,0 +1,13 @@
+masterFasta: "/<path>/cog_gisaid.fasta"
+refFasta: "/<path>/shared_data/ref.fasta"
+startingPb: "/<path>/starting.epoch_1.outliers_removed.with_ref.renamed.rerooted.pb"
+eppMax: 4
+fasttreeMP:
+  iterN: 0
+  sprlength: 1000
+  nni: 0
+  spr: 2
+matOptimize:
+  iterN: 6
+  radius: 40
+  final_radius: 100
