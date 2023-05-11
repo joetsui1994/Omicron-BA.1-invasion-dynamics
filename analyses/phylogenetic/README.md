@@ -8,6 +8,7 @@ This directory holds scripts and code used to run the phylogenetic analysis pipe
 - `exporter_country_test_per_capita_plot.R` R script for calculating weekly number of COVID-19 tests performed per capita at the country-level; relevant to Fig. S3
 - `calculate_country-level_EIIs.R` R script for calculating weekly Omicron BA.1 EIIs for all selected potential exporters at country-level; relevant to Fig. S4 and S5
 - `USA_ESP_within-country_sensitivity_EIIs_plot.R` R script for sensitivity analysis with EIIs calculated for Spain and the United States at the autonomous community- and state-level, respectively; relevant to Fig. S6
+- `travel-history_EII_phylo_importation_comparison_plot.R` R script comparing importation intensity inferred from phylogenetic analysis with EIIs and country of origin of inbound travellers tested positive for BA.1 (data from UKHSA); relevant to Fig. 2
 
 ### [Lineage-branching-simulation](lineage-branching-simulation/)
 - `lineage-simulation.R` R script for running the branching process simulation and generating Figs. S7 and S8
