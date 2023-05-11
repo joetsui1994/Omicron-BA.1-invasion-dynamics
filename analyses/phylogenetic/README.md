@@ -1,7 +1,7 @@
 ## Phylogenetic Analyses
 
 ### [Pipeline](pipline/)
-[TODO]
+This directory holds scripts and code used to run the phylogenetic analysis pipeline. The pipeline is implemented using Nextflow and currently divided into separate modules. This is because, for certain processes (e.g. checks for MCMC convergence), the current implementation requires the output to be evaluated manually or visually using external programs before any downstream analysis can proceed. This means that some steps have to be triggered manually before the workflow can continue running; work has been done to streamline this process however. Please also note that, much of the data used in these analyses cannot be shared publicly for privacy reasons and so these scripts might not run as expected.
 
 ### [EIIs](EIIs/)
 - `calculate_USA_ESP_within-country_EIIs.R` R script for calculating weekly Omicron BA.1 EIIs for Spain at the autonomous community-level and the United States at the state-level
