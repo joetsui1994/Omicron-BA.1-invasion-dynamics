@@ -9,7 +9,7 @@
 This repository contains data and scripts used to generate results
 presented in [citation]. Please note that some data files cannot be shared publicly due to data sharing agreements; some scripts may also need adjustments to run depending on local setup.
 
-GISAID [terms of use](https://www.gisaid.org/registration/terms-of-use/) prohibit sharing of sequence data in this repository. Therefore we make the GISAID accessions available here and provide a table of acknowledgements. Note also that we cannot make administrative level two (adm2) metadata for genomic sequences deom COG-UK (https://www.cogconsortium.uk).
+GISAID [terms of use](https://www.gisaid.org/registration/terms-of-use/) prohibit sharing of sequence data in this repository. Therefore we make the GISAID accessions available here and provide a table of acknowledgements. Note also that we cannot make administrative level two (adm2) metadata for genomic sequences from COG-UK (https://www.cogconsortium.uk) available.
 
 ## Abstract
 
