@@ -25,7 +25,6 @@ The structure of this repository is shown below:
 │   ├── importation
 │   ├── continuous-phylogeography
 │   ├── discrete-phylogeography-GLM
-│   ├── phylogenetic
 │   └── README.md
 ├── data
 │   ├── phylogenetic
@@ -45,8 +44,7 @@ All input data we are able to share publicly are stored in the [`data`](data/) d
 The [`analyses`](analyses/) directory contains sub-directories for the following analyses:
 
 - **Epidemiological analyses:** [`epidemiological`](analyses/epidemiological/) contains scripts for processing and visualising data relevant to the epidemiology of and human mobility patterns during the Omicron BA.1 wave.
-- **Phylogenetic analyses:** [`phylogenetic`](analyses/phylogenetic/) contains scripts and XMLs for 2-state discrete phylogeographic analysis to infer importation of Omicron BA.1 into England.
-- **Importation analyses:** [`importation`](analyses/importation/) contains scripts for running the branching process model and calculating/visualising the Estimated Importation Intensity (EII) of Omicron BA.1 from potential exporters.
+- **Importation analyses:** [`importation`](analyses/importation/) contains scripts and other materials for analyses relevant to Omicron BA.1 importation dynamics, including the phylodynamic analysis, the branching process model, and also calculating the Estimated Importation Intensity (EII) for potential exporters.
 - **Continous phylogeographic analyses:** [`continuous-phylogeography`](analyses/continuous-phylogeography/) contains scripts and XMLs for continuous phylogeographic reconstruction of identified transmission lineages within England; also contains scripts for visualising results from these analyses.
 - **Discrete phylogeographic analyses with GLM:** [`discrete-phylogeography-GLM`](analyses/discrete-phylogeography-GLM/) contains scripts and XMLs for discrete phylogeographic analyses with GLM to test the association of demographic, epidemiological, and mobility-related factors with viral lineage movements at the LTLA-level; also contains scripts for visualising results from these analyses.
 
