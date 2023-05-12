@@ -2,7 +2,7 @@
 
 ​​**Joseph L.-H. Tsui**, John T. McCrone, Ben Lambert, Sumali Bajaj, Rhys P.D. Inward, Paolo Bosetti, Houriiyah Tegally, Verity Hill, Rosario Evans Pena, Alexander E. Zarebski, Thomas P. Peacock, Luyang Liu, Neo Wu, Megan Davis, Isaac I. Bogoch, Kamran Khan, Meaghan Kall, Nurin Iwani Binti Abdul Aziz, Rachel Colquhoun, Áine O’Toole, Ben Jackson, Abhishek Dasgupta, Eduan Wilkinson, Tulio de Oliveira, The COVID-19 Genomics UK (COG-UK) consortium, Thomas R. Connor, Nicholas J. Loman, Vittoria Colizza, Christophe Fraser, Erik Volz, Xiang Ji, Bernardo Gutierrez, Meera Chand, Simon Dellicour, **Simon Cauchemez**, **Jayna Raghwani**, **Marc A. Suchard**, **Philippe Lemey**, **Andrew Rambaut**, **Oliver G. Pybus**, **Moritz U.G. Kraemer**
 
-[![DOI]](<insert>)
+[![DOI](https://zenodo.org/badge/638929927.svg)](https://zenodo.org/badge/latestdoi/638929927)
 
 ---
 
